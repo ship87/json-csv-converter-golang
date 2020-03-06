@@ -3,11 +3,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub stars](https://img.shields.io/github/stars/ship87/json-csv-converter-golang.svg)](https://github.com/ship87/json-csv-converter-golang/stargazers)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ship87/json-csv-converter-golang)](https://goreportcard.com/report/github.com/ship87/json-csv-converter-golang)
+
 ## Build and run
 
-`CGO_ENABLED=0 GOOS=linux go build -tags netgo -ldflags "-s" -a -installsuffix cgo -o service \
-&& docker build -t service . \
-&& docker run -e -it -p 8080:8080 -v /home/{user}/{app folder}/download:/download service`
+`CGO_ENABLED=0 GOOS=linux go build -tags netgo -ldflags "-s" -a -installsuffix cgo -o service && docker build -t service . && docker run -e -it -p 8080:8080 -v /home/{user}/{app folder}/download:/download service`
 
 ## Test
 

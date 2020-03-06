@@ -123,7 +123,7 @@ func saveCsvFile(lines []models.Line, w http.ResponseWriter) ([]byte, bool) {
 		}
 	}
 
-	resultJson, err = json.Marshal(result);
+	resultJson, err = json.Marshal(result)
 	isErr = checkServerError("Cannot write to file", err, w)
 
 	return resultJson, isErr

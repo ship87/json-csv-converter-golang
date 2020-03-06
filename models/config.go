@@ -15,6 +15,7 @@ var envVariables = map[string]string{
 	"AppPort":           "JSON_CSV_CONVERTER_GOLANG_APP_PORT",
 }
 
+// Configuration of app
 type Config struct {
 	DirectoryDownload string
 	PrefixFile        string
@@ -29,6 +30,7 @@ func init() {
 	}
 }
 
+// Filling the configuration with current data
 func (c *Config) Fill() {
 
 	for index, variable := range envVariables {
