@@ -1,0 +1,16 @@
+FROM alpine:3.4
+
+ENV JSON_CSV_CONVERTER_GOLANG_DIRECTORY_DOWNLOAD=download
+ENV JSON_CSV_CONVERTER_GOLANG_PREFIX_FILE=result-*.csv
+ENV JSON_CSV_CONVERTER_GOLANG_APP_URL=http://localhost:8080
+ENV JSON_CSV_CONVERTER_GOLANG_APP_PORT=8080
+
+RUN apk add --no-cache ca-certificates
+
+WORKDIR /
+
+COPY ./service /service
+
+EXPOSE 8080
+
+CMD ["./service"]
