@@ -1,9 +1,8 @@
 # Convert JSON to CSV using golang
 
-[![License](https://poser.pugx.org/ship87/json-csv-converter-golang/license.svg)](https://packagist.org/packages/ship87/json-csv-converter-golang)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub stars](https://img.shields.io/github/stars/ship87/json-csv-converter-golang.svg)](https://github.com/ship87/json-csv-converter-golang/stargazers)
-[![Total Downloads](https://poser.pugx.org/ship87/json-csv-converter-golang/downloads.svg)](https://packagist.org/packages/ship87/json-csv-converter-golang)
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/ship87/json-csv-converter-golang)](https://goreportcard.com/report/github.com/ship87/json-csv-converter-golang)
 ## Build and run
 
 `CGO_ENABLED=0 GOOS=linux go build -tags netgo -ldflags "-s" -a -installsuffix cgo -o service \
