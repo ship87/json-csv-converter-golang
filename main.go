@@ -4,6 +4,8 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"github.com/ship87/json-csv-converter-golang/helpers"
+	"github.com/ship87/json-csv-converter-golang/models"
 	"io"
 	"io/ioutil"
 	"log"
@@ -11,14 +13,13 @@ import (
 	"net/url"
 	"os"
 	"strconv"
-	"test/helpers"
-	"test/models"
 	"time"
 )
 
 var cfg models.Config
 
 func init() {
+
 	cfg.Fill()
 }
 
@@ -33,6 +34,7 @@ func main() {
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
+
 	switch r.Method {
 	case "POST":
 		contentType := r.Header.Get("Content-Type")
@@ -73,14 +75,14 @@ func handleJson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resultJson, isErr := saveFile(lines, w)
+	resultJson, isErr := saveCsvFile(lines, w)
 	if isErr {
 		return
 	}
 
 	endTime := time.Now().Nanosecond()
 	elapsedTime := float64(endTime - startTime)
-	elapsedTimeInMs := strconv.FormatFloat(elapsedTime / 1000000,'f', -1, 64)
+	elapsedTimeInMs := strconv.FormatFloat(elapsedTime/1000000, 'f', -1, 64)
 
 	w.Header().Set("X-Elapsed-Time", helpers.ConcatStrings([]string{elapsedTimeInMs, " ms"}))
 	w.Header().Set("Content-Type", "application/json")
@@ -88,7 +90,7 @@ func handleJson(w http.ResponseWriter, r *http.Request) {
 	w.Write(resultJson)
 }
 
-func saveFile(lines []models.Line, w http.ResponseWriter) ([]byte, bool) {
+func saveCsvFile(lines []models.Line, w http.ResponseWriter) ([]byte, bool) {
 
 	var result models.Result
 	var resultJson []byte
