@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/joho/godotenv"
-	"github.com/ship87/json-csv-converter-golang/helpers"
+	"github.com/ship87/json-csv-converter-golang/app/helpers"
 	"log"
 	"os"
 	"reflect"

@@ -4,14 +4,16 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"github.com/ship87/json-csv-converter-golang/helpers"
-	"github.com/ship87/json-csv-converter-golang/models"
+	"github.com/ship87/json-csv-converter-golang/app/helpers"
+	"github.com/ship87/json-csv-converter-golang/app/models"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
+	"runtime"
+	"sort"
 	"strconv"
 	"time"
 )
@@ -75,6 +77,10 @@ func handleJson(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	sort.Slice(lines, func(firstItem, secondItem int) bool {
+		return lines[firstItem].Number < lines[secondItem].Number
+	})
+
 	resultJson, isErr := saveCsvFile(lines, w)
 	if isErr {
 		return
@@ -82,9 +88,14 @@ func handleJson(w http.ResponseWriter, r *http.Request) {
 
 	endTime := time.Now().Nanosecond()
 	elapsedTime := float64(endTime - startTime)
-	elapsedTimeInMs := strconv.FormatFloat(elapsedTime/1000000, 'f', -1, 64)
+	elapsedTimeInMs := strconv.FormatFloat(elapsedTime/1000, 'f', -1, 64)
+
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	var usagedMemory = strconv.FormatUint(bToKb(m.Alloc), 10)
 
 	w.Header().Set("X-Elapsed-Time", helpers.ConcatStrings([]string{elapsedTimeInMs, " ms"}))
+	w.Header().Set("X-Usaged-Memory", helpers.ConcatStrings([]string{usagedMemory, " KiB"}))
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(resultJson)
@@ -148,6 +159,10 @@ func checkServerError(message string, err error, w http.ResponseWriter) bool {
 
 	log.Println(message, err)
 	w.WriteHeader(http.StatusInternalServerError)
-
+	w.Write([]byte(message))
 	return true
+}
+
+func bToKb(b uint64) uint64 {
+	return b / 1024
 }
